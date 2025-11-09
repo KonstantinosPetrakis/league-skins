@@ -11,7 +11,7 @@ const USER_DATA = app.getPath('userData')
 export const CONFIG_PATH = USER_DATA + '/config.json'
 
 export const CSLOL_MANAGER_URL =
-  'https://github.com/LeagueToolkit/cslol-manager/releases/download/2024-10-27-401067d-prerelease/cslol-manager-windows.zip'
+  'https://github.com/LeagueToolkit/cslol-manager/releases/latest/download/cslol-manager.zip'
 
 export const LOL_SKINS_URL = 'https://github.com/darkseal-org/lol-skins/archive/refs/heads/main.zip'
 
