@@ -10,12 +10,24 @@ A Windows skin changer for League of Legends based on lol-skins and cslol-manage
 - It downloads, unzips and uses [cslol-manager](https://github.com/LeagueToolkit/cslol-manager) to change the skins in the game.
 - It uses [Community Data Dragon](https://www.communitydragon.org/) to get the latest skin metadata.
 
-## Build it yourself
+## Installation
 
 ```bash
 git clone https://github.com/KonstantinosPetrakis/league-skins.git
 cd league-skins
 npm install
+npm run build-cslol # requires docker; clones latest cslol-manager and builds it from source so it can be packaged with electron
+```
+
+## Run it for development
+
+```bash
+npm run dev
+```
+
+## Build it yourself
+
+```bash
 npm run build:win
 ```
 

@@ -6,6 +6,7 @@
  */
 
 import fs from 'fs-extra'
+import path from 'path'
 import util from 'node:util'
 import { exec, spawn, ChildProcess } from 'child_process'
 
@@ -17,8 +18,8 @@ import {
   LOL_SKINS_LOCATION,
   TEMP_DIR
 } from './constants'
+import type { Skin, Chroma } from './metadata'
 import { getLeaguePath } from './config'
-import { Skin, Chroma } from './metadata'
 
 let runningProcess: ChildProcess | null = null
 
@@ -28,10 +29,10 @@ let runningProcess: ChildProcess | null = null
  * @returns {Promise<void>} when the operation is finished.
  */
 export async function setSkin(skin: Skin | Chroma): Promise<void> {
-  const skinsDirDestination = `${TEMP_DIR}\\skins`
-  const overlayDirDestination = `${TEMP_DIR}\\overlay`
-  const skinPath = `${LOL_SKINS_LOCATION}\\${skin.championId}\\${skin.id}.fantome`
-  const gamePath = `${await getLeaguePath()}\\Game`
+  const skinsDirDestination = path.join(TEMP_DIR, 'skins')
+  const overlayDirDestination = path.join(TEMP_DIR, 'overlay')
+  const skinPath = path.join(LOL_SKINS_LOCATION, skin.championId.toString(), `${skin.id}.fantome`)
+  const gamePath = path.join(await getLeaguePath(), 'Game')
 
   await fs.remove(TEMP_DIR)
   await fs.ensureDir(TEMP_DIR)
@@ -44,7 +45,7 @@ export async function setSkin(skin: Skin | Chroma): Promise<void> {
   console.log(`Setting skin ${skin.id} for champion ${skin.championId}`)
 
   await promisifiedExec(
-    `${CSLOL_MANAGER_EXECUTABLE} import "${skinPath}" "${skinsDirDestination}/skin" --game:"${gamePath}"`
+    `${CSLOL_MANAGER_EXECUTABLE} import "${skinPath}" "${path.join(skinsDirDestination, 'skin')}" --game:"${gamePath}"`
   )
 
   await promisifiedExec(

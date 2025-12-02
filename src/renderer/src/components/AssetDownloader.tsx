@@ -16,7 +16,7 @@ export default function AssetDownloader({
   useEffect(() => {
     ;(async (): Promise<void> => {
       try {
-        await Promise.all([window.api.downloadLolSkins(), window.api.downloadCsLolManager()])
+        await window.api.downloadLolSkins()
         setDownloading(false)
       } catch {
         setError("Couldn't download assets. Please try again later.")

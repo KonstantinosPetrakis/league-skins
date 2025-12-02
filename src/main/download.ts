@@ -12,24 +12,19 @@ import JSZip from 'jszip'
 import { Mutex } from 'async-mutex'
 
 import {
-  CSLOL_MANAGER_URL,
-  CSLOL_MANAGER_LOCATION,
-  CSLOL_MANAGER_DESTINATION,
-  CSLOL_MANAGER_CONFIG,
   LOL_SKINS_URL,
   LOL_SKINS_LOCATION,
   LOL_SKINS_DESTINATION,
   LOL_SKINS_METADATA_URL,
   LOL_SKINS_METADATA_LOCATION
 } from './constants'
-import { getLeaguePath } from './config'
 
 import {
+  type Champion,
+  type Skin,
   listChampions,
   listSkins,
-  getChampSkinIdFromSkinId,
-  type Champion,
-  type Skin
+  getChampSkinIdFromSkinId
 } from './metadata'
 
 const downloadMutex = new Mutex()
@@ -109,50 +104,6 @@ function extractChromaId(filename: string): number | null {
   if (!match) return null
 
   return getChampSkinIdFromSkinId(Number(match[1])).skinId
-}
-
-/**
- * This function writes a constant CSLOL-MANAGER configuration file.
- * @returns {Promise<void>} when the operation is finished.
- */
-async function createConfig(): Promise<void> {
-  const leaguePath = getLeaguePath()
-
-  const configContent = `[General]
-ignorebad=false
-themeAccentColor=1
-lastZipDirectory=@Variant(\0\0\0\x11\xff\xff\xff\xff)
-themePrimaryColor=4
-windowWidth=640
-blacklist=true
-suppressInstallConflicts=false
-enableAutoRun=false
-enableSystray=false
-themeDarkMode=true
-leaguePath=${leaguePath}/Game
-windowHeight=640
-verbosePatcher=false
-detectGamePath=true
-windowMaximised=false
-enableUpdates=0
-removeUnknownNames=true
-lastUpdateUTCMinutes=29039901
-`
-  fs.writeFile(CSLOL_MANAGER_CONFIG, configContent)
-}
-
-/**
- * This function downloads and unzips the CSLOL-MANAGER executables for Windows into user data.
- * @returns {Promise<void>} when the operation is finished.
- */
-export async function downloadCsLolManager(): Promise<void> {
-  if (await locationExists(CSLOL_MANAGER_LOCATION)) return
-
-  const response = await fetch(CSLOL_MANAGER_URL)
-  const buffer = Buffer.from(await response.arrayBuffer())
-
-  await decompressZip(buffer, CSLOL_MANAGER_DESTINATION)
-  await createConfig()
 }
 
 /**

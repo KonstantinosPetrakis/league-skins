@@ -5,12 +5,13 @@
  */
 
 import { dialog } from 'electron'
+import path from 'path'
 import fs from 'fs-extra'
 
 import { CONFIG_PATH } from './constants'
 
 const DEFAULT_CONFIG = {
-  leaguePath: 'C:\\Riot Games\\League of Legends'
+  leaguePath: path.join('C:', 'Riot Games', 'League of Legends')
 }
 
 /**
@@ -48,7 +49,7 @@ export async function setConfigValue(key: string, value: string): Promise<void> 
  * @returns {Promise<boolean>} true if the league path is valid, false otherwise.
  */
 export async function isLeaguePathValid(leaguePath: string): Promise<boolean> {
-  return fs.pathExists(leaguePath + '\\LeagueClient.exe')
+  return fs.pathExists(path.join(leaguePath, 'LeagueClient.exe'))
 }
 
 /**

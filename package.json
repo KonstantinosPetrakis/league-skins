@@ -1,6 +1,6 @@
 {
   "name": "league-skins",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A Windows Skin-Changer for League of Legends based on lol-skins and cslol-manager.",
   "main": "./out/main/index.js",
   "author": "Konstantinos Petrakis",
@@ -13,6 +13,7 @@
     "typecheck": "npm run typecheck:node && npm run typecheck:web",
     "start": "electron-vite preview",
     "dev": "electron-vite dev",
+    "build-cslol": "rimraf cslol && docker build -t cslol-builder . -f ./cslol.dockerfile && shx mkdir -p cslol && cross-var docker run --rm -v \"${PWD}/cslol:/output\" cslol-builder",
     "build": "npm run typecheck && electron-vite build",
     "postinstall": "electron-builder install-app-deps",
     "build:unpack": "npm run build && electron-builder --dir",
@@ -36,6 +37,7 @@
     "@types/react": "^18.3.18",
     "@types/react-dom": "^18.3.5",
     "@vitejs/plugin-react": "^4.3.4",
+    "cross-var": "^1.1.0",
     "electron": "^34.2.0",
     "electron-builder": "^25.1.8",
     "electron-vite": "^3.0.0",
@@ -46,6 +48,8 @@
     "prettier": "^3.5.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "rimraf": "^6.1.2",
+    "shx": "^0.4.0",
     "typescript": "^5.7.3",
     "vite": "^6.1.0"
   }
