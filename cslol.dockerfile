@@ -57,10 +57,6 @@ RUN echo '#!/bin/bash' > /build.sh && \
     echo 'mkdir -p /output' >> /build.sh && \
     echo 'cp build/*.exe /output/' >> /build.sh && \
     echo 'find build -name "*.dll" -exec cp {} /output/ \; 2>/dev/null || true' >> /build.sh && \
-    # Copy required MinGW runtime DLLs
-    echo 'cp /usr/x86_64-w64-mingw32/bin/libgcc_s_seh-1.dll /output/' >> /build.sh && \
-    echo 'cp /usr/x86_64-w64-mingw32/bin/libstdc++-6.dll /output/' >> /build.sh && \
-    echo 'cp /usr/x86_64-w64-mingw32/bin/libwinpthread-1.dll /output/' >> /build.sh && \
     # Create config.ini in the same directory as the exes (/output)
     echo 'cat > /output/config.ini <<'\''EOF'\'' ' >> /build.sh && \
     echo '[General]' >> /build.sh && \
