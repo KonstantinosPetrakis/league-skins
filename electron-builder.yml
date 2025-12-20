@@ -1,4 +1,4 @@
-appId: com.electron.app
+appId: com.cslol.app
 productName: league-skins
 directories:
   buildResources: build
