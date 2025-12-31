@@ -34,13 +34,13 @@ export async function setSkin(skin: Skin | Chroma): Promise<void> {
   const skinPath = path.join(LOL_SKINS_LOCATION, skin.championId.toString(), `${skin.id}.fantome`)
   const gamePath = path.join(await getLeaguePath(), 'Game')
 
-  await fs.remove(TEMP_DIR)
-  await fs.ensureDir(TEMP_DIR)
-
   if (runningProcess) {
     runningProcess.kill()
     runningProcess = null
   }
+
+  await fs.remove(TEMP_DIR)
+  await fs.ensureDir(TEMP_DIR)
 
   console.log(`Setting skin ${skin.id} for champion ${skin.championId}`)
 
